@@ -15,15 +15,17 @@ public class GraphVizEditor : Editor
     {
         return true;
     }
-    
+
     public override void OnPreviewGUI(Rect r, GUIStyle background)
     {
+
         var path = AssetDatabase.GetAssetPath(target);
+        Debug.Log(path);
         if (path.EndsWith(".svg"))
         {
-            Debug.Log(path);            
+            Debug.Log(path);
             ReadXml(path);
-            
+
             //var texture = new Texture2D(100, 100);
             //texture.SetPixel(1, 1, Color.red);
             //texture.Apply();
@@ -42,33 +44,38 @@ public class GraphVizEditor : Editor
         var ellipseId = "";
         var pathId = "";
         var polygonId = "";
+        var textId = "";
+        var ellipseCx = 0f;
+        var ellipseCy = 0f;
         GameObject ellipseGameObject = null;
         GameObject pathGameObject = null;
         GameObject polygonGameObject = null;
+        GameObject textGameObject = null;
         LineRenderer lr = null;
         MeshRenderer mr = null;
         MeshFilter mf = null;
+        TextMesh tm = null;
 
         // Parse the file and display each of the nodes.
         while (reader.Read())
         {
-            
+
             switch (reader.NodeType)
             {
                 case XmlNodeType.Element:
                     //Debug.Log($"<{reader.Name}>");
-                    
-                    if(reader.Name == "g")
+
+                    if (reader.Name == "g")
                     {
                         var @class = reader.GetAttribute("class");
-                        if(@class == "graph")
+                        if (@class == "graph")
                         {
                             continue;
                         }
                         gId = reader.GetAttribute("id");
                         ellipseId = gId + ".ellipse";
                         ellipseGameObject = GameObject.Find(ellipseId);
-                        if(ellipseGameObject == null)
+                        if (ellipseGameObject == null)
                         {
                             ellipseGameObject = new GameObject(ellipseId);
                         }
@@ -84,16 +91,22 @@ public class GraphVizEditor : Editor
                         {
                             polygonGameObject = new GameObject(polygonId);
                         }
+                        textId = gId + ".text";
+                        textGameObject = GameObject.Find(textId);
+                        if (textGameObject == null)
+                        {
+                            textGameObject = new GameObject(textId);
+                        }
                         continue;
                     }
                     if (reader.Name == "ellipse")
                     {
-                        if(ellipseGameObject == null)
+                        if (ellipseGameObject == null)
                         {
                             continue;
                         }
-                        var cx = float.Parse(reader.GetAttribute("cx"), CultureInfo.InvariantCulture);
-                        var cy = -float.Parse(reader.GetAttribute("cy"), CultureInfo.InvariantCulture);
+                        ellipseCx = float.Parse(reader.GetAttribute("cx"), CultureInfo.InvariantCulture);
+                        ellipseCy = -float.Parse(reader.GetAttribute("cy"), CultureInfo.InvariantCulture);
                         var rx = float.Parse(reader.GetAttribute("rx"), CultureInfo.InvariantCulture);
                         var ry = float.Parse(reader.GetAttribute("ry"), CultureInfo.InvariantCulture);
                         lr = ellipseGameObject.GetComponent<LineRenderer>();
@@ -101,12 +114,12 @@ public class GraphVizEditor : Editor
                         {
                             lr = ellipseGameObject.AddComponent<LineRenderer>();
                         }
-                        SetEllipseRadius(lr, cx, cy, rx, ry);
+                        SetEllipseParameters(lr, ellipseCx, ellipseCy, rx, ry);
                         continue;
                     }
                     if (reader.Name == "path")
                     {
-                        if(pathGameObject == null)
+                        if (pathGameObject == null)
                         {
                             continue;
                         }
@@ -135,7 +148,7 @@ public class GraphVizEditor : Editor
                     }
                     if (reader.Name == "polygon")
                     {
-                        if(polygonGameObject == null)
+                        if (polygonGameObject == null)
                         {
                             continue;
                         }
@@ -147,11 +160,11 @@ public class GraphVizEditor : Editor
                             mr = polygonGameObject.AddComponent<MeshRenderer>();
                         }
                         mf = polygonGameObject.GetComponent<MeshFilter>();
-                        if(mf == null)
+                        if (mf == null)
                         {
                             mf = polygonGameObject.AddComponent<MeshFilter>();
                         }
-                        if(mf.sharedMesh == null)
+                        if (mf.sharedMesh == null)
                         {
                             var coords = new Vector3[coordStrings.Length / 2];
                             for (int i = 0; i < coords.Length; i++)
@@ -167,6 +180,24 @@ public class GraphVizEditor : Editor
                         }
                         continue;
                     }
+                    if (reader.Name == "text")
+                    {
+                        if (textGameObject == null)
+                        {
+                            continue;
+                        }
+                        tm = textGameObject.GetComponent<TextMesh>();
+                        if (tm == null)
+                        {
+                            tm = textGameObject.AddComponent<TextMesh>();
+                        }
+                        tm.alignment = TextAlignment.Center;
+                        tm.anchor = TextAnchor.MiddleCenter;
+                        tm.fontSize = (int)float.Parse(reader.GetAttribute("font-size"), CultureInfo.InvariantCulture) * 10;
+                        tm.text = reader.ReadElementContentAsString();
+                        tm.transform.SetPositionAndRotation(new Vector2(ellipseCx, ellipseCy), Quaternion.identity);
+                        continue;
+                    }
                     break;
                 case XmlNodeType.EndElement:
                     //Debug.Log(reader.Name + " end");
@@ -176,7 +207,7 @@ public class GraphVizEditor : Editor
         }
     }
 
-       private void SetEllipseRadius(LineRenderer lr, float cx, float cy, float rx, float ry)
+    private void SetEllipseParameters(LineRenderer lr, float cx, float cy, float rx, float ry)
     {
         var segments = 500;
         var points = new Vector3[segments + 2];
