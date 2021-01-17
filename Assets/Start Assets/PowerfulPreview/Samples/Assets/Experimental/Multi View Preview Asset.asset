@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3e4f31d8f160444a13ff007b639831, type: 3}
+  m_Name: Multi View Preview Asset
+  m_EditorClassIdentifier: 
+  assets:
+  - {fileID: 11400000, guid: 658b110f092183f469b1ff9aa267c520, type: 2}
+  - {fileID: 11400000, guid: c128fc140da6fbc43a259f48f1717833, type: 2}
+  - {fileID: 11400000, guid: 927f21e7a464e9541ab0f44c6c4dc415, type: 2}
+  - {fileID: 11400000, guid: fd7f5d8efff68d34dad56ae7e4738ced, type: 2}
+  cutsceneData: {fileID: 11400000, guid: c128fc140da6fbc43a259f48f1717833, type: 2}
+  animationData: {fileID: 0}
+  gameObjectData: {fileID: 11400000, guid: 927f21e7a464e9541ab0f44c6c4dc415, type: 2}
+  multiCameraData: {fileID: 11400000, guid: fd7f5d8efff68d34dad56ae7e4738ced, type: 2}

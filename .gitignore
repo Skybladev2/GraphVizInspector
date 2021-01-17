@@ -1,0 +1,12 @@
+.vs
+*.*proj
+*.sln
+Assets/I2
+Assets/ProceduralUIImage
+I2.meta
+ProceduralUIImage.meta
+Build
+Library
+Temp
+obj
+Logs

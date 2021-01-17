@@ -1,0 +1,6 @@
+digraph scenes {
+	Splash -> MainMenu -> Welcome -> SpecifyMasterGender -> AboutQuestion;
+	Welcome -> AboutQuestion -> AboutGuess -> GuessResponse -> AboutDetailed;
+	AboutQuestion -> AboutDetailed -> WaitForReady -> OneMinuteDescription;
+	AboutDetailed -> OneMinuteDescription -> OneMinuteChallenge -> OneMinuteResult -> TwoMinutesDescription -> TwoMinutesChallenge -> TwoMinutesResult -> FiveMinutesDescription -> FiveMinutesChallenge -> FiveMinutesResult -> TenMinutesDescription -> TenMinutesChallenge -> TenMinutesResult -> WannaSeeStatistics;
+}
