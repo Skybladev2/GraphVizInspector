@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "com.alelievr.node-graph-processor": "file:D:/Projects/Unity/NodeGraphProcessor/Assets/com.alelievr.NodeGraphProcessor",
+    "com.seneral.nodeeditorframework": "https://github.com/Seneral/Node_Editor_Framework.git#release-pkg",
+    "com.seneral.undopro": "https://github.com/Seneral/UndoPro.git#release-pkg",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.collab-proxy": "1.3.9",
