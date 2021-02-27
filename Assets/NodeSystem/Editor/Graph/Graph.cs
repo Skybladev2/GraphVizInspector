@@ -15,7 +15,7 @@ namespace Subtegral.DialogueSystem.Editor
         public DialogueNode EntryPointNode;
         private NodeSearchWindow _searchWindow;
 
-        public Graph(StoryGraph editorWindow)
+        public Graph(GraphEditor editorWindow)
         {
             styleSheets.Add(Resources.Load<StyleSheet>("NarrativeGraph"));
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
@@ -35,7 +35,7 @@ namespace Subtegral.DialogueSystem.Editor
         }
 
 
-        private void AddSearchWindow(StoryGraph editorWindow)
+        private void AddSearchWindow(GraphEditor editorWindow)
         {
             _searchWindow = ScriptableObject.CreateInstance<NodeSearchWindow>();
             _searchWindow.Configure(editorWindow, this);

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Subtegral.DialogueSystem.Editor
 {
-    public class StoryGraph : EditorWindow
+    public class GraphEditor : EditorWindow
     {
         private string _fileName = "New Narrative";
 
@@ -14,7 +14,7 @@ namespace Subtegral.DialogueSystem.Editor
         [MenuItem("Graph/Narrative Graph")]
         public static void CreateGraphViewWindow()
         {
-            var window = GetWindow<StoryGraph>();
+            var window = GetWindow<GraphEditor>();
             window.titleContent = new GUIContent("Narrative Graph");
         }
 
