@@ -24,6 +24,7 @@ namespace Subtegral.DialogueSystem.Editor
             Insert(0, grid);
             grid.StretchToParentSize();
 
+            this.AddManipulator(new ContentDragger());
             AddElement(GetEntryPointNodeInstance());
 
             AddSearchWindow(editorWindow);

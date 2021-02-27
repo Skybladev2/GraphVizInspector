@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78b3fd9154634ebdb8c8a48960b9a16a, type: 3}
-  m_Name: New Narrative
+  m_Name: Scenes
   m_EditorClassIdentifier: 
   NodeLinks:
   - BaseNodeGUID: 6e592569-d3d0-4fde-a545-e85eab4f13f1
@@ -121,92 +121,4 @@ MonoBehaviour:
   - BaseNodeGUID: af07d32f-1c60-4a51-aff7-294611ee9739
     PortName: Next
     TargetNodeGUID: b9c1bc28-090e-489f-8f68-b26c76d93815
-  DialogueNodeData:
-  - NodeGUID: 0ac42494-c661-43a9-a74f-6f49c0c9916f
-    DialogueText: MainMenu
-    Position: {x: 511, y: 201}
-  - NodeGUID: 52acc744-287f-4e52-b6cf-5359d0cb9aed
-    DialogueText: Splash
-    Position: {x: 261, y: 203}
-  - NodeGUID: a4186a67-8944-4a32-950f-782f75c8b2a2
-    DialogueText: Welcome
-    Position: {x: 743, y: 202}
-  - NodeGUID: 7eda95fb-99b4-496f-86fa-d095eb2743ad
-    DialogueText: SpecifyMasterGender
-    Position: {x: 1011, y: 201}
-  - NodeGUID: fd075a46-5b29-432b-93f2-d6b309c7810a
-    DialogueText: AboutQuestion
-    Position: {x: 1289, y: 361}
-  - NodeGUID: 759d785e-04ff-4b02-9bae-25f2dd506697
-    DialogueText: AboutGuess
-    Position: {x: 1544, y: 360}
-  - NodeGUID: 714f52e2-167e-4b3e-a927-be21c3ebd633
-    DialogueText: GuessResponse
-    Position: {x: 1800, y: 360}
-  - NodeGUID: 78f24e4c-e1dc-4e40-9b06-007f1c02a92b
-    DialogueText: AboutDetailed
-    Position: {x: 2047, y: 591}
-  - NodeGUID: 1c06dd94-37c5-48b6-b3ba-bc96c104ed96
-    DialogueText: WaitForReady
-    Position: {x: 2338, y: 593}
-  - NodeGUID: 8c05d828-8a9c-4a68-8111-ebf6c7a3a599
-    DialogueText: OneMinuteDescription
-    Position: {x: 2568, y: 702}
-  - NodeGUID: b3e061ee-a0c7-4a76-b115-fc646aa42851
-    DialogueText: OneMinuteChallenge
-    Position: {x: 2870, y: 705}
-  - NodeGUID: 8fe1728a-8617-44fe-9ab1-3057d4e7c542
-    DialogueText: OneMinuteResult
-    Position: {x: 3165, y: 706}
-  - NodeGUID: 126bea59-a5af-4848-84b2-18f6cc1ac5b1
-    DialogueText: TwoMinutesDescription
-    Position: {x: 3441, y: 708}
-  - NodeGUID: 7b367c0a-3b4e-473c-9172-bdfd060eeb1a
-    DialogueText: TwoMinutesChallenge
-    Position: {x: 3756, y: 711}
-  - NodeGUID: 7315e320-467e-40eb-9689-167716b1e6d6
-    DialogueText: TwoMinutesResult
-    Position: {x: 4088, y: 711}
-  - NodeGUID: d94e93b2-37f3-4a9b-a5ee-9440f95f4cd7
-    DialogueText: FiveMinutesDescription
-    Position: {x: 4410, y: 709}
-  - NodeGUID: df4ba485-f055-4f59-a022-9fab54fda8ad
-    DialogueText: FiveMinutesResult
-    Position: {x: 5057, y: 703}
-  - NodeGUID: 01cfa349-a457-45a7-945f-2b10004f4930
-    DialogueText: FiveMinutesChallenge
-    Position: {x: 4741, y: 702}
-  - NodeGUID: b55188e0-6eee-4af5-9dee-5f95c1b7067e
-    DialogueText: TenMinutesDescription
-    Position: {x: 5337, y: 706}
-  - NodeGUID: 70a11c7e-dd8d-4bc1-b934-c7c9486ba958
-    DialogueText: TenMinutesChallenge
-    Position: {x: 5658, y: 705}
-  - NodeGUID: 1841658b-02ba-40d1-a5f6-79ffba36a79e
-    DialogueText: TenMinutesResult
-    Position: {x: 5993, y: 699}
-  - NodeGUID: 81b0d180-8726-4eeb-8825-36262f80c562
-    DialogueText: WannaSeeStatistics
-    Position: {x: 6264, y: 710}
-  - NodeGUID: 6c0a8e19-f5ea-4027-bd90-99fcfd931932
-    DialogueText: EnterEmail
-    Position: {x: 6853, y: 707}
-  - NodeGUID: 1487c85d-ee78-420e-9d55-6f81ad3e7217
-    DialogueText: SoYesOrNo
-    Position: {x: 6598, y: 793}
-  - NodeGUID: ce904346-1d1e-4357-abdf-a645f8a782da
-    DialogueText: SendingStats
-    Position: {x: 7197, y: 719}
-  - NodeGUID: 710d9abc-f7a7-4fde-abc1-5bf5ba4bee03
-    DialogueText: ConnectionError
-    Position: {x: 7189, y: 495}
-  - NodeGUID: b9c1bc28-090e-489f-8f68-b26c76d93815
-    DialogueText: End
-    Position: {x: 7547, y: 1554}
-  - NodeGUID: af07d32f-1c60-4a51-aff7-294611ee9739
-    DialogueText: Thanks
-    Position: {x: 7360, y: 1120}
-  ExposedProperties:
-  - PropertyName: 
-    PropertyValue: New Value
-  CommentBlockData: []
+  NodeData: []

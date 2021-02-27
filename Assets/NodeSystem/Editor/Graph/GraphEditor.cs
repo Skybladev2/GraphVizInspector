@@ -7,7 +7,7 @@ namespace Subtegral.DialogueSystem.Editor
 {
     public class GraphEditor : EditorWindow
     {
-        private string _fileName = "New Narrative";
+        private string _fileName = "Scenes";
 
         private Graph _graphView;
 
