@@ -7,7 +7,7 @@ namespace Subtegral.DialogueSystem.DataContainers
     public class GraphNodeData
     {
         public string NodeGUID;
-        public string DialogueText;
+        public string Text;
         public Vector2 Position;
     }
 }

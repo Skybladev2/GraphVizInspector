@@ -68,7 +68,7 @@ namespace Subtegral.DialogueSystem.Editor
             var tempGraphNode = new GraphNode()
             {
                 title = nodeName,
-                DialogueText = nodeName,
+                Text = nodeName,
                 GUID = Guid.NewGuid().ToString()
             };
             tempGraphNode.styleSheets.Add(Resources.Load<StyleSheet>("Node"));
@@ -83,7 +83,7 @@ namespace Subtegral.DialogueSystem.Editor
             var textField = new TextField("");
             textField.RegisterValueChangedCallback(evt =>
             {
-                tempGraphNode.DialogueText = evt.newValue;
+                tempGraphNode.Text = evt.newValue;
                 tempGraphNode.title = evt.newValue;
             });
             textField.SetValueWithoutNotify(tempGraphNode.title);
@@ -157,7 +157,7 @@ namespace Subtegral.DialogueSystem.Editor
             {
                 title = "START",
                 GUID = Guid.NewGuid().ToString(),
-                DialogueText = "ENTRYPOINT",
+                Text = "ENTRYPOINT",
                 EntyPoint = true
             };
 
