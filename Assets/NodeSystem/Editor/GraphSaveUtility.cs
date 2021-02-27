@@ -45,7 +45,7 @@ namespace Subtegral.DialogueSystem.Editor
             {
                 DialogueContainer container = loadedAsset as DialogueContainer;
                 container.NodeLinks = dialogueContainerObject.NodeLinks;
-                container.DialogueNodeData = dialogueContainerObject.DialogueNodeData;                
+                container.NodeData = dialogueContainerObject.NodeData;                
                 EditorUtility.SetDirty(container);
             }
 
@@ -70,7 +70,7 @@ namespace Subtegral.DialogueSystem.Editor
 
             foreach (var node in Nodes.Where(node => !node.EntyPoint))
             {
-                dialogueContainerObject.DialogueNodeData.Add(new DialogueNodeData
+                dialogueContainerObject.NodeData.Add(new DialogueNodeData
                 {
                     NodeGUID = node.GUID,
                     DialogueText = node.DialogueText,
@@ -115,7 +115,7 @@ namespace Subtegral.DialogueSystem.Editor
         /// </summary>
         private void GenerateDialogueNodes()
         {
-            foreach (var perNode in _dialogueContainer.DialogueNodeData)
+            foreach (var perNode in _dialogueContainer.NodeData)
             {
                 var tempNode = _graphView.CreateNode(perNode.DialogueText, Vector2.zero);
                 tempNode.GUID = perNode.NodeGUID;
@@ -139,7 +139,7 @@ namespace Subtegral.DialogueSystem.Editor
                     LinkNodesTogether(Nodes[i].outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
 
                     targetNode.SetPosition(new Rect(
-                        _dialogueContainer.DialogueNodeData.First(x => x.NodeGUID == targetNodeGUID).Position,
+                        _dialogueContainer.NodeData.First(x => x.NodeGUID == targetNodeGUID).Position,
                         _graphView.DefaultNodeSize));
                 }
             }

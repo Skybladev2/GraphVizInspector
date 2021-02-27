@@ -121,7 +121,7 @@ MonoBehaviour:
   - BaseNodeGUID: af07d32f-1c60-4a51-aff7-294611ee9739
     PortName: Next
     TargetNodeGUID: b9c1bc28-090e-489f-8f68-b26c76d93815
-  DialogueNodeData:
+  NodeData:
   - NodeGUID: 0ac42494-c661-43a9-a74f-6f49c0c9916f
     DialogueText: MainMenu
     Position: {x: 511, y: 201}
@@ -206,3 +206,5 @@ MonoBehaviour:
   - NodeGUID: af07d32f-1c60-4a51-aff7-294611ee9739
     DialogueText: Thanks
     Position: {x: 7360, y: 1120}
+  ExposedProperties: []
+  CommentBlockData: []
