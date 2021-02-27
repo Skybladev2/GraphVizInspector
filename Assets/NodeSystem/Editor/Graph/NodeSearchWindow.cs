@@ -9,11 +9,11 @@ namespace Subtegral.DialogueSystem.Editor
     public class NodeSearchWindow : ScriptableObject, ISearchWindowProvider
     {
         private EditorWindow _window;
-        private StoryGraphView _graphView;
+        private Graph _graphView;
 
         private Texture2D _indentationIcon;
 
-        public void Configure(EditorWindow window, StoryGraphView graphView)
+        public void Configure(EditorWindow window, Graph graphView)
         {
             _window = window;
             _graphView = graphView;

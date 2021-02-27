@@ -14,9 +14,9 @@ namespace Subtegral.DialogueSystem.Editor
         private List<DialogueNode> Nodes => _graphView.nodes.ToList().Cast<DialogueNode>().ToList();
 
         private DialogueContainer _dialogueContainer;
-        private StoryGraphView _graphView;
+        private Graph _graphView;
 
-        public static GraphSaveUtility GetInstance(StoryGraphView graphView)
+        public static GraphSaveUtility GetInstance(Graph graphView)
         {
             return new GraphSaveUtility
             {

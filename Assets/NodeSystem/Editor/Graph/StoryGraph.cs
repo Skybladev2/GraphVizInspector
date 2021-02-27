@@ -9,7 +9,7 @@ namespace Subtegral.DialogueSystem.Editor
     {
         private string _fileName = "New Narrative";
 
-        private StoryGraphView _graphView;
+        private Graph _graphView;
 
         [MenuItem("Graph/Narrative Graph")]
         public static void CreateGraphViewWindow()
@@ -20,7 +20,7 @@ namespace Subtegral.DialogueSystem.Editor
 
         private void ConstructGraphView()
         {
-            _graphView = new StoryGraphView(this)
+            _graphView = new Graph(this)
             {
                 name = "Narrative Graph",
             };

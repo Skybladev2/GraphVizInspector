@@ -8,14 +8,14 @@ using Button = UnityEngine.UIElements.Button;
 
 namespace Subtegral.DialogueSystem.Editor
 {
-    public class StoryGraphView : GraphView
+    public class Graph : GraphView
     {
         public readonly Vector2 DefaultNodeSize = new Vector2(200, 150);
         public readonly Vector2 DefaultCommentBlockSize = new Vector2(300, 200);
         public DialogueNode EntryPointNode;
         private NodeSearchWindow _searchWindow;
 
-        public StoryGraphView(StoryGraph editorWindow)
+        public Graph(StoryGraph editorWindow)
         {
             styleSheets.Add(Resources.Load<StyleSheet>("NarrativeGraph"));
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
