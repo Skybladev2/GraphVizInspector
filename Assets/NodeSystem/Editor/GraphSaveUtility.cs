@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using Subtegral.DialogueSystem.DataContainers;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using Subtegral.DialogueSystem.DataContainers;
 using UnityEngine.UIElements;
 
 namespace Subtegral.DialogueSystem.Editor
@@ -17,9 +12,6 @@ namespace Subtegral.DialogueSystem.Editor
     {
         private List<Edge> Edges => _graphView.edges.ToList();
         private List<DialogueNode> Nodes => _graphView.nodes.ToList().Cast<DialogueNode>().ToList();
-
-        private List<Group> CommentBlocks =>
-            _graphView.graphElements.ToList().Where(x => x is Group).Cast<Group>().ToList();
 
         private DialogueContainer _dialogueContainer;
         private StoryGraphView _graphView;
@@ -53,9 +45,7 @@ namespace Subtegral.DialogueSystem.Editor
             {
                 DialogueContainer container = loadedAsset as DialogueContainer;
                 container.NodeLinks = dialogueContainerObject.NodeLinks;
-                container.DialogueNodeData = dialogueContainerObject.DialogueNodeData;
-                container.ExposedProperties = dialogueContainerObject.ExposedProperties;
-                container.CommentBlockData = dialogueContainerObject.CommentBlockData;
+                container.DialogueNodeData = dialogueContainerObject.DialogueNodeData;                
                 EditorUtility.SetDirty(container);
             }
 
