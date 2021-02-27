@@ -13,7 +13,7 @@ namespace Subtegral.DialogueSystem.Editor
         private List<Edge> Edges => _graphView.edges.ToList();
         private List<GraphNode> Nodes => _graphView.nodes.ToList().Cast<GraphNode>().ToList();
 
-        private DialogueContainer _dialogueContainer;
+        private GraphContainer _GraphContainer;
         private Graph _graphView;
 
         public static GraphSaveUtility GetInstance(Graph graphView)
@@ -26,8 +26,8 @@ namespace Subtegral.DialogueSystem.Editor
 
         public void SaveGraph(string fileName)
         {
-            var dialogueContainerObject = ScriptableObject.CreateInstance<DialogueContainer>();
-            if (!SaveNodes(fileName, dialogueContainerObject))
+            var GraphContainerObject = ScriptableObject.CreateInstance<GraphContainer>();
+            if (!SaveNodes(fileName, GraphContainerObject))
             {
                 return;
             }
@@ -35,32 +35,36 @@ namespace Subtegral.DialogueSystem.Editor
             if (!AssetDatabase.IsValidFolder("Assets/Resources"))
                 AssetDatabase.CreateFolder("Assets", "Resources");
 
-            UnityEngine.Object loadedAsset = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(DialogueContainer));
+            UnityEngine.Object loadedAsset = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphContainer));
 
             if (loadedAsset == null || !AssetDatabase.Contains(loadedAsset))
             {
-                AssetDatabase.CreateAsset(dialogueContainerObject, $"Assets/Resources/{fileName}.asset");
+                AssetDatabase.CreateAsset(GraphContainerObject, $"Assets/Resources/{fileName}.asset");
             }
             else
             {
-                DialogueContainer container = loadedAsset as DialogueContainer;
-                container.NodeLinks = dialogueContainerObject.NodeLinks;
-                container.NodeData = dialogueContainerObject.NodeData;                
+                GraphContainer container = loadedAsset as GraphContainer;
+                container.NodeLinks = GraphContainerObject.NodeLinks;
+                container.NodeData = GraphContainerObject.NodeData;                
                 EditorUtility.SetDirty(container);
             }
 
             AssetDatabase.SaveAssets();
         }
 
-        private bool SaveNodes(string fileName, DialogueContainer dialogueContainerObject)
+        private bool SaveNodes(string fileName, GraphContainer GraphContainerObject)
         {
-            if (!Edges.Any()) return false;
+            if (!Edges.Any())
+            {
+                return false;
+            }
+
             var connectedSockets = Edges.Where(x => x.input.node != null).ToArray();
             for (var i = 0; i < connectedSockets.Count(); i++)
             {
                 var outputNode = (connectedSockets[i].output.node as GraphNode);
                 var inputNode = (connectedSockets[i].input.node as GraphNode);
-                dialogueContainerObject.NodeLinks.Add(new NodeLinkData
+                GraphContainerObject.NodeLinks.Add(new NodeLinkData
                 {
                     BaseNodeGUID = outputNode.GUID,
                     PortName = connectedSockets[i].output.portName,
@@ -70,7 +74,7 @@ namespace Subtegral.DialogueSystem.Editor
 
             foreach (var node in Nodes.Where(node => !node.EntyPoint))
             {
-                dialogueContainerObject.NodeData.Add(new GraphNodeData
+                GraphContainerObject.NodeData.Add(new GraphNodeData
                 {
                     NodeGUID = node.GUID,
                     Text = node.Text,
@@ -81,12 +85,12 @@ namespace Subtegral.DialogueSystem.Editor
             return true;
         }
 
-        public void LoadNarrative(string fileName)
+        public void LoadGraph(string fileName)
         {
-            _dialogueContainer = Resources.Load<DialogueContainer>(fileName);
-            if (_dialogueContainer == null)
+            _GraphContainer = Resources.Load<GraphContainer>(fileName);
+            if (_GraphContainer == null)
             {
-                EditorUtility.DisplayDialog("File Not Found", "Target Narrative Data does not exist!", "OK");
+                EditorUtility.DisplayDialog("File Not Found", "Target Graph Data does not exist!", "OK");
                 return;
             }
 
@@ -100,7 +104,7 @@ namespace Subtegral.DialogueSystem.Editor
         /// </summary>
         private void ClearGraph()
         {
-            Nodes.Find(x => x.EntyPoint).GUID = _dialogueContainer.NodeLinks[0].BaseNodeGUID;
+            Nodes.Find(x => x.EntyPoint).GUID = _GraphContainer.NodeLinks[0].BaseNodeGUID;
             foreach (var perNode in Nodes)
             {
                 if (perNode.EntyPoint) continue;
@@ -115,13 +119,13 @@ namespace Subtegral.DialogueSystem.Editor
         /// </summary>
         private void GenerateGraphNodes()
         {
-            foreach (var perNode in _dialogueContainer.NodeData)
+            foreach (var perNode in _GraphContainer.NodeData)
             {
                 var tempNode = _graphView.CreateNode(perNode.Text, Vector2.zero);
                 tempNode.GUID = perNode.NodeGUID;
                 _graphView.AddElement(tempNode);
 
-                var nodePorts = _dialogueContainer.NodeLinks.Where(x => x.BaseNodeGUID == perNode.NodeGUID).ToList();
+                var nodePorts = _GraphContainer.NodeLinks.Where(x => x.BaseNodeGUID == perNode.NodeGUID).ToList();
                 nodePorts.ForEach(x => _graphView.AddChoicePort(tempNode, x.PortName));
             }
         }
@@ -131,7 +135,7 @@ namespace Subtegral.DialogueSystem.Editor
             for (var i = 0; i < Nodes.Count; i++)
             {
                 var k = i; //Prevent access to modified closure
-                var connections = _dialogueContainer.NodeLinks.Where(x => x.BaseNodeGUID == Nodes[k].GUID).ToList();
+                var connections = _GraphContainer.NodeLinks.Where(x => x.BaseNodeGUID == Nodes[k].GUID).ToList();
                 for (var j = 0; j < connections.Count(); j++)
                 {
                     var targetNodeGUID = connections[j].TargetNodeGUID;
@@ -139,7 +143,7 @@ namespace Subtegral.DialogueSystem.Editor
                     LinkNodesTogether(Nodes[i].outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
 
                     targetNode.SetPosition(new Rect(
-                        _dialogueContainer.NodeData.First(x => x.NodeGUID == targetNodeGUID).Position,
+                        _GraphContainer.NodeData.First(x => x.NodeGUID == targetNodeGUID).Position,
                         _graphView.DefaultNodeSize));
                 }
             }

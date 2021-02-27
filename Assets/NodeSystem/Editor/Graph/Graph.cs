@@ -17,13 +17,8 @@ namespace Subtegral.DialogueSystem.Editor
 
         public Graph(GraphEditor editorWindow)
         {
-            styleSheets.Add(Resources.Load<StyleSheet>("NarrativeGraph"));
+            styleSheets.Add(Resources.Load<StyleSheet>("Graph"));
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
-
-            this.AddManipulator(new ContentDragger());
-            this.AddManipulator(new SelectionDragger());
-            this.AddManipulator(new RectangleSelector());
-            this.AddManipulator(new FreehandSelector());
 
             var grid = new GridBackground();
             Insert(0, grid);

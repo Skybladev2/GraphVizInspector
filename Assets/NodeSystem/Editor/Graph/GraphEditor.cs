@@ -11,18 +11,18 @@ namespace Subtegral.DialogueSystem.Editor
 
         private Graph _graphView;
 
-        [MenuItem("Graph/Narrative Graph")]
+        [MenuItem("Graph/Graph")]
         public static void CreateGraphViewWindow()
         {
             var window = GetWindow<GraphEditor>();
-            window.titleContent = new GUIContent("Narrative Graph");
+            window.titleContent = new GUIContent("Graph");
         }
 
         private void ConstructGraphView()
         {
             _graphView = new Graph(this)
             {
-                name = "Narrative Graph",
+                name = "Graph",
             };
             _graphView.StretchToParentSize();
             rootVisualElement.Add(_graphView);
@@ -37,11 +37,8 @@ namespace Subtegral.DialogueSystem.Editor
             fileNameTextField.MarkDirtyRepaint();
             fileNameTextField.RegisterValueChangedCallback(evt => _fileName = evt.newValue);
             toolbar.Add(fileNameTextField);
-
             toolbar.Add(new Button(() => RequestDataOperation(true)) {text = "Save Data"});
-
             toolbar.Add(new Button(() => RequestDataOperation(false)) {text = "Load Data"});
-            // toolbar.Add(new Button(() => _graphView.CreateNewGraphNode("Dialogue Node")) {text = "New Node",});
             rootVisualElement.Add(toolbar);
         }
 
@@ -53,7 +50,7 @@ namespace Subtegral.DialogueSystem.Editor
                 if (save)
                     saveUtility.SaveGraph(_fileName);
                 else
-                    saveUtility.LoadNarrative(_fileName);
+                    saveUtility.LoadGraph(_fileName);
             }
             else
             {

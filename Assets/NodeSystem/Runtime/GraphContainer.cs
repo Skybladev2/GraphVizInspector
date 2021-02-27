@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Subtegral.DialogueSystem.DataContainers
 {
     [Serializable]
-    public class DialogueContainer : ScriptableObject
+    public class GraphContainer : ScriptableObject
     {
         public List<NodeLinkData> NodeLinks = new List<NodeLinkData>();
         public List<GraphNodeData> NodeData = new List<GraphNodeData>();
