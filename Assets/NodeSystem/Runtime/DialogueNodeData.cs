@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Subtegral.DialogueSystem.DataContainers
 {
     [Serializable]
-    public class DialogueNodeData
+    public class GraphNodeData
     {
         public string NodeGUID;
         public string DialogueText;

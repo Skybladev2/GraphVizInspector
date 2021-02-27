@@ -31,7 +31,7 @@ namespace Subtegral.DialogueSystem.Editor
                 new SearchTreeGroupEntry(new GUIContent("Create Node"), 0),                
                 new SearchTreeEntry(new GUIContent("Dialogue Node"))
                 {
-                    level = 1, userData = new DialogueNode()
+                    level = 1, userData = new GraphNode()
                 },                
             };
 
@@ -46,8 +46,8 @@ namespace Subtegral.DialogueSystem.Editor
             var graphMousePosition = _graphView.contentViewContainer.WorldToLocal(mousePosition);
             switch (SearchTreeEntry.userData)
             {
-                case DialogueNode dialogueNode:
-                    _graphView.CreateNewDialogueNode("Dialogue Node", graphMousePosition);
+                case GraphNode GraphNode:
+                    _graphView.CreateNewGraphNode("Dialogue Node", graphMousePosition);
                     return true;                
             }
             return false;

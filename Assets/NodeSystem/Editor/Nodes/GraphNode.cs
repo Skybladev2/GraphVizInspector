@@ -2,7 +2,7 @@
 
 namespace Subtegral.DialogueSystem.Editor
 {
-    public class DialogueNode : Node
+    public class GraphNode : Node
     {
         public string DialogueText;
         public string GUID;

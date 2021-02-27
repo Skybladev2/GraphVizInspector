@@ -41,7 +41,7 @@ namespace Subtegral.DialogueSystem.Editor
             toolbar.Add(new Button(() => RequestDataOperation(true)) {text = "Save Data"});
 
             toolbar.Add(new Button(() => RequestDataOperation(false)) {text = "Load Data"});
-            // toolbar.Add(new Button(() => _graphView.CreateNewDialogueNode("Dialogue Node")) {text = "New Node",});
+            // toolbar.Add(new Button(() => _graphView.CreateNewGraphNode("Dialogue Node")) {text = "New Node",});
             rootVisualElement.Add(toolbar);
         }
 

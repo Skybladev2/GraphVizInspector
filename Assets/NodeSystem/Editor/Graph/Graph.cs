@@ -12,7 +12,7 @@ namespace Subtegral.DialogueSystem.Editor
     {
         public readonly Vector2 DefaultNodeSize = new Vector2(200, 150);
         public readonly Vector2 DefaultCommentBlockSize = new Vector2(300, 200);
-        public DialogueNode EntryPointNode;
+        public GraphNode EntryPointNode;
         private NodeSearchWindow _searchWindow;
 
         public Graph(GraphEditor editorWindow)
@@ -58,47 +58,47 @@ namespace Subtegral.DialogueSystem.Editor
             return compatiblePorts;
         }
 
-        public void CreateNewDialogueNode(string nodeName, Vector2 position)
+        public void CreateNewGraphNode(string nodeName, Vector2 position)
         {
             AddElement(CreateNode(nodeName, position));
         }
 
-        public DialogueNode CreateNode(string nodeName, Vector2 position)
+        public GraphNode CreateNode(string nodeName, Vector2 position)
         {
-            var tempDialogueNode = new DialogueNode()
+            var tempGraphNode = new GraphNode()
             {
                 title = nodeName,
                 DialogueText = nodeName,
                 GUID = Guid.NewGuid().ToString()
             };
-            tempDialogueNode.styleSheets.Add(Resources.Load<StyleSheet>("Node"));
-            var inputPort = GetPortInstance(tempDialogueNode, Direction.Input, Port.Capacity.Multi);
+            tempGraphNode.styleSheets.Add(Resources.Load<StyleSheet>("Node"));
+            var inputPort = GetPortInstance(tempGraphNode, Direction.Input, Port.Capacity.Multi);
             inputPort.portName = "Input";
-            tempDialogueNode.inputContainer.Add(inputPort);
-            tempDialogueNode.RefreshExpandedState();
-            tempDialogueNode.RefreshPorts();
-            tempDialogueNode.SetPosition(new Rect(position,
+            tempGraphNode.inputContainer.Add(inputPort);
+            tempGraphNode.RefreshExpandedState();
+            tempGraphNode.RefreshPorts();
+            tempGraphNode.SetPosition(new Rect(position,
                 DefaultNodeSize)); //To-Do: implement screen center instantiation positioning
 
             var textField = new TextField("");
             textField.RegisterValueChangedCallback(evt =>
             {
-                tempDialogueNode.DialogueText = evt.newValue;
-                tempDialogueNode.title = evt.newValue;
+                tempGraphNode.DialogueText = evt.newValue;
+                tempGraphNode.title = evt.newValue;
             });
-            textField.SetValueWithoutNotify(tempDialogueNode.title);
-            tempDialogueNode.mainContainer.Add(textField);
+            textField.SetValueWithoutNotify(tempGraphNode.title);
+            tempGraphNode.mainContainer.Add(textField);
 
-            var button = new Button(() => { AddChoicePort(tempDialogueNode); })
+            var button = new Button(() => { AddChoicePort(tempGraphNode); })
             {
                 text = "Add Choice"
             };
-            tempDialogueNode.titleButtonContainer.Add(button);
-            return tempDialogueNode;
+            tempGraphNode.titleButtonContainer.Add(button);
+            return tempGraphNode;
         }
 
 
-        public void AddChoicePort(DialogueNode nodeCache, string overriddenPortName = "")
+        public void AddChoicePort(GraphNode nodeCache, string overriddenPortName = "")
         {
             var generatedPort = GetPortInstance(nodeCache, Direction.Output);
             var portLabel = generatedPort.contentContainer.Q<Label>("type");
@@ -145,15 +145,15 @@ namespace Subtegral.DialogueSystem.Editor
             node.RefreshExpandedState();
         }
 
-        private Port GetPortInstance(DialogueNode node, Direction nodeDirection,
+        private Port GetPortInstance(GraphNode node, Direction nodeDirection,
             Port.Capacity capacity = Port.Capacity.Single)
         {
             return node.InstantiatePort(Orientation.Horizontal, nodeDirection, capacity, typeof(float));
         }
 
-        private DialogueNode GetEntryPointNodeInstance()
+        private GraphNode GetEntryPointNodeInstance()
         {
-            var nodeCache = new DialogueNode()
+            var nodeCache = new GraphNode()
             {
                 title = "START",
                 GUID = Guid.NewGuid().ToString(),

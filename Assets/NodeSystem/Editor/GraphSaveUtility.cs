@@ -11,7 +11,7 @@ namespace Subtegral.DialogueSystem.Editor
     public class GraphSaveUtility
     {
         private List<Edge> Edges => _graphView.edges.ToList();
-        private List<DialogueNode> Nodes => _graphView.nodes.ToList().Cast<DialogueNode>().ToList();
+        private List<GraphNode> Nodes => _graphView.nodes.ToList().Cast<GraphNode>().ToList();
 
         private DialogueContainer _dialogueContainer;
         private Graph _graphView;
@@ -58,8 +58,8 @@ namespace Subtegral.DialogueSystem.Editor
             var connectedSockets = Edges.Where(x => x.input.node != null).ToArray();
             for (var i = 0; i < connectedSockets.Count(); i++)
             {
-                var outputNode = (connectedSockets[i].output.node as DialogueNode);
-                var inputNode = (connectedSockets[i].input.node as DialogueNode);
+                var outputNode = (connectedSockets[i].output.node as GraphNode);
+                var inputNode = (connectedSockets[i].input.node as GraphNode);
                 dialogueContainerObject.NodeLinks.Add(new NodeLinkData
                 {
                     BaseNodeGUID = outputNode.GUID,
@@ -70,7 +70,7 @@ namespace Subtegral.DialogueSystem.Editor
 
             foreach (var node in Nodes.Where(node => !node.EntyPoint))
             {
-                dialogueContainerObject.NodeData.Add(new DialogueNodeData
+                dialogueContainerObject.NodeData.Add(new GraphNodeData
                 {
                     NodeGUID = node.GUID,
                     DialogueText = node.DialogueText,
@@ -91,8 +91,8 @@ namespace Subtegral.DialogueSystem.Editor
             }
 
             ClearGraph();
-            GenerateDialogueNodes();
-            ConnectDialogueNodes();
+            GenerateGraphNodes();
+            ConnectGraphNodes();
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Subtegral.DialogueSystem.Editor
         /// <summary>
         /// Create All serialized nodes and assign their guid and dialogue text to them
         /// </summary>
-        private void GenerateDialogueNodes()
+        private void GenerateGraphNodes()
         {
             foreach (var perNode in _dialogueContainer.NodeData)
             {
@@ -126,7 +126,7 @@ namespace Subtegral.DialogueSystem.Editor
             }
         }
 
-        private void ConnectDialogueNodes()
+        private void ConnectGraphNodes()
         {
             for (var i = 0; i < Nodes.Count; i++)
             {
