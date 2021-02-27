@@ -17,8 +17,6 @@ namespace Subtegral.DialogueSystem.Editor
         public readonly Vector2 DefaultNodeSize = new Vector2(200, 150);
         public readonly Vector2 DefaultCommentBlockSize = new Vector2(300, 200);
         public DialogueNode EntryPointNode;
-        public Blackboard Blackboard = new Blackboard();
-        public List<ExposedProperty> ExposedProperties { get; private set; } = new List<ExposedProperty>();
         private NodeSearchWindow _searchWindow;
 
         public StoryGraphView(StoryGraph editorWindow)
@@ -47,60 +45,6 @@ namespace Subtegral.DialogueSystem.Editor
             _searchWindow.Configure(editorWindow, this);
             nodeCreationRequest = context =>
                 SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), _searchWindow);
-        }
-
-
-        public void ClearBlackBoardAndExposedProperties()
-        {
-            ExposedProperties.Clear();
-            Blackboard.Clear();
-        }
-
-        public Group CreateCommentBlock(Rect rect, CommentBlockData commentBlockData = null)
-        {
-            if(commentBlockData==null)
-                commentBlockData = new CommentBlockData();
-            var group = new Group
-            {
-                autoUpdateGeometry = true,
-                title = commentBlockData.Title
-            };
-            AddElement(group);
-            group.SetPosition(rect);
-            return group;
-        }
-
-        public void AddPropertyToBlackBoard(ExposedProperty property, bool loadMode = false)
-        {
-            var localPropertyName = property.PropertyName;
-            var localPropertyValue = property.PropertyValue;
-            if (!loadMode)
-            {
-                while (ExposedProperties.Any(x => x.PropertyName == localPropertyName))
-                    localPropertyName = $"{localPropertyName}(1)";
-            }
-
-            var item = ExposedProperty.CreateInstance();
-            item.PropertyName = localPropertyName;
-            item.PropertyValue = localPropertyValue;
-            ExposedProperties.Add(item);
-
-            var container = new VisualElement();
-            var field = new BlackboardField {text = localPropertyName, typeText = "string"};
-            container.Add(field);
-
-            var propertyValueTextField = new TextField("Value:")
-            {
-                value = localPropertyValue
-            };
-            propertyValueTextField.RegisterValueChangedCallback(evt =>
-            {
-                var index = ExposedProperties.FindIndex(x => x.PropertyName == item.PropertyName);
-                ExposedProperties[index].PropertyValue = evt.newValue;
-            });
-            var sa = new BlackboardRow(field, propertyValueTextField);
-            container.Add(sa);
-            Blackboard.Add(container);
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

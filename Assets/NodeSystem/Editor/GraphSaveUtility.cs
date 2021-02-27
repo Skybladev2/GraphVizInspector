@@ -35,21 +35,22 @@ namespace Subtegral.DialogueSystem.Editor
         public void SaveGraph(string fileName)
         {
             var dialogueContainerObject = ScriptableObject.CreateInstance<DialogueContainer>();
-            if (!SaveNodes(fileName, dialogueContainerObject)) return;
-            SaveExposedProperties(dialogueContainerObject);
-            SaveCommentBlocks(dialogueContainerObject);
+            if (!SaveNodes(fileName, dialogueContainerObject))
+            {
+                return;
+            }
 
             if (!AssetDatabase.IsValidFolder("Assets/Resources"))
                 AssetDatabase.CreateFolder("Assets", "Resources");
 
             UnityEngine.Object loadedAsset = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(DialogueContainer));
 
-            if (loadedAsset == null || !AssetDatabase.Contains(loadedAsset)) 
-			{
+            if (loadedAsset == null || !AssetDatabase.Contains(loadedAsset))
+            {
                 AssetDatabase.CreateAsset(dialogueContainerObject, $"Assets/Resources/{fileName}.asset");
             }
-            else 
-			{
+            else
+            {
                 DialogueContainer container = loadedAsset as DialogueContainer;
                 container.NodeLinks = dialogueContainerObject.NodeLinks;
                 container.DialogueNodeData = dialogueContainerObject.DialogueNodeData;
@@ -90,28 +91,6 @@ namespace Subtegral.DialogueSystem.Editor
             return true;
         }
 
-        private void SaveExposedProperties(DialogueContainer dialogueContainer)
-        {
-            dialogueContainer.ExposedProperties.Clear();
-            dialogueContainer.ExposedProperties.AddRange(_graphView.ExposedProperties);
-        }
-
-        private void SaveCommentBlocks(DialogueContainer dialogueContainer)
-        {
-            foreach (var block in CommentBlocks)
-            {
-                var nodes = block.containedElements.Where(x => x is DialogueNode).Cast<DialogueNode>().Select(x => x.GUID)
-                    .ToList();
-
-                dialogueContainer.CommentBlockData.Add(new CommentBlockData
-                {
-                    ChildNodes = nodes,
-                    Title = block.title,
-                    Position = block.GetPosition().position
-                });
-            }
-        }
-
         public void LoadNarrative(string fileName)
         {
             _dialogueContainer = Resources.Load<DialogueContainer>(fileName);
@@ -124,8 +103,6 @@ namespace Subtegral.DialogueSystem.Editor
             ClearGraph();
             GenerateDialogueNodes();
             ConnectDialogueNodes();
-            AddExposedProperties();
-            GenerateCommentBlocks();
         }
 
         /// <summary>
@@ -169,7 +146,7 @@ namespace Subtegral.DialogueSystem.Editor
                 {
                     var targetNodeGUID = connections[j].TargetNodeGUID;
                     var targetNode = Nodes.First(x => x.GUID == targetNodeGUID);
-                    LinkNodesTogether(Nodes[i].outputContainer[j].Q<Port>(), (Port) targetNode.inputContainer[0]);
+                    LinkNodesTogether(Nodes[i].outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
 
                     targetNode.SetPosition(new Rect(
                         _dialogueContainer.DialogueNodeData.First(x => x.NodeGUID == targetNodeGUID).Position,
@@ -188,30 +165,6 @@ namespace Subtegral.DialogueSystem.Editor
             tempEdge?.input.Connect(tempEdge);
             tempEdge?.output.Connect(tempEdge);
             _graphView.Add(tempEdge);
-        }
-
-        private void AddExposedProperties()
-        {
-            _graphView.ClearBlackBoardAndExposedProperties();
-            foreach (var exposedProperty in _dialogueContainer.ExposedProperties)
-            {
-                _graphView.AddPropertyToBlackBoard(exposedProperty);
-            }
-        }
-
-        private void GenerateCommentBlocks()
-        {
-            foreach (var commentBlock in CommentBlocks)
-            {
-                _graphView.RemoveElement(commentBlock);
-            }
-
-            foreach (var commentBlockData in _dialogueContainer.CommentBlockData)
-            {
-               var block = _graphView.CreateCommentBlock(new Rect(commentBlockData.Position, _graphView.DefaultCommentBlockSize),
-                    commentBlockData);
-               block.AddElements(Nodes.Where(x=>commentBlockData.ChildNodes.Contains(x.GUID)));
-            }
         }
     }
 }
